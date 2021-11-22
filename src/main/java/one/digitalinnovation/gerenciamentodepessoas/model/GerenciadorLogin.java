@@ -2,22 +2,16 @@ package one.digitalinnovation.gerenciamentodepessoas.model;
 
 import java.util.List;
 
-public class LoginGerenciador {
+public class GerenciadorLogin {
 
 	private long id;
-
 	private String nome;
-
 	private String numeroPessoal;
-
 	private long cpf;
-
 	private String respEquipe;
-	
 	private String usuario;
-
 	private String senha;
-
+	private String token;
 	private List<CadastroFuncionario> cadastroFuncionario;
 	
 	public long getId() {
@@ -76,6 +70,13 @@ public class LoginGerenciador {
 		this.senha = senha;
 	}
 
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public List<CadastroFuncionario> getCadastroFuncionario() {
 		return cadastroFuncionario;
 	}
@@ -83,5 +84,4 @@ public class LoginGerenciador {
 	public void setCadastroFuncionario(List<CadastroFuncionario> cadastroFuncionario) {
 		this.cadastroFuncionario = cadastroFuncionario;
 	}
-
 }

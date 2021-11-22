@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import one.digitalinnovation.gerenciamentodepessoas.model.CadastroGerenciador;
 
+import java.util.Optional;
+
 @Repository
 public interface CadastroGerenciadorRepository extends JpaRepository<CadastroGerenciador, Long> {
+    Optional<CadastroGerenciador> findByUsuario(String userName);
 
 }

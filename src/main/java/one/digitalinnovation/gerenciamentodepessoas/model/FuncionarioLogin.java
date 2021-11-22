@@ -2,7 +2,7 @@ package one.digitalinnovation.gerenciamentodepessoas.model;
 
 import java.util.Date;
 
-public class LoginFuncionario {
+public class FuncionarioLogin {
 
 	private long id;
 
