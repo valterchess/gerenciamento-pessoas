@@ -1,8 +1,8 @@
 package one.digitalinnovation.gerenciamentodepessoas.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,16 +39,19 @@ public class CadastroFuncionario {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date entrada;
+	private List<LocalDate> entrada;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date saida;
+	private List<LocalDate> saida;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("cadastroFuncionario")
 	private CadastroGerenciador cadastroGerenciador;
-	
-	public CadastroFuncionario(long id, String nome, String numeroPessoal, long cpf, String equipe, Date entrada, Date saida) {
+
+
+	//manter apenas em caso de aplicação do Junit
+	public CadastroFuncionario(long id, String nome, String numeroPessoal, long cpf, String equipe, List<LocalDate> entrada, List<LocalDate> saida) {
 		this.id = id;
 		this.nome = nome;
 		this.numeroPessoal = numeroPessoal;
@@ -57,7 +60,7 @@ public class CadastroFuncionario {
 		this.entrada = entrada;
 		this.saida = saida;
 	}
-
+	//manter apenas em caso de aplicação do Junit
 	public CadastroFuncionario() {
 	}
 
@@ -111,20 +114,19 @@ public class CadastroFuncionario {
 		this.cadastroGerenciador = cadastrogerenciador;
 	}
 	
-	public Date getEntrada() {
+	public List<LocalDate> getEntrada() {
 		return entrada;
 	}
 
-	public void setEntrada(Date entrada) {
-		this.entrada = entrada;
+	public void setEntrada(LocalDate entrada) {
+		this.entrada.add(entrada);
 	}
 
-	public Date getSaida() {
+	public List<LocalDate> getSaida() {
 		return saida;
 	}
 
-	public void setSaida(Date saida) {
-		this.saida = saida;
+	public void setSaida(LocalDate saida) {
+		this.saida.add(saida);
 	}
-
 }

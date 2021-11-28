@@ -1,10 +1,7 @@
 package one.digitalinnovation.gerenciamentodepessoas.service;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.CadastroFuncionario;
-import one.digitalinnovation.gerenciamentodepessoas.model.CadastroGerenciador;
-import one.digitalinnovation.gerenciamentodepessoas.model.GerenciadorLogin;
-import one.digitalinnovation.gerenciamentodepessoas.repository.CadastroFuncionarioRepository;
-import one.digitalinnovation.gerenciamentodepessoas.repository.CadastroGerenciadorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.model.*;
+import one.digitalinnovation.gerenciamentodepessoas.repository.*;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
