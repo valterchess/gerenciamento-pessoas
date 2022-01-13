@@ -3,14 +3,7 @@ package one.digitalinnovation.gerenciamentodepessoas.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -19,8 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_cadastroFuncionario")
-public class CadastroFuncionario {
+@Table(name = "tb_funcionario")
+public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -36,22 +29,21 @@ public class CadastroFuncionario {
 
 	@NotBlank(message = "O atributo equipe é obrigatório!")
 	private String equipe;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private List<LocalDate> entrada;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	private List<LocalDate> saida;
+	@OneToMany(mappedBy = "funcionario",cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("funcionario")
+	private List<Entrada> entrada;
+
+	@OneToMany(mappedBy = "funcionario",cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("funcionario")
+	private List<Saida> saida;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("cadastroFuncionario")
-	private CadastroGerenciador cadastroGerenciador;
-
+	@JsonIgnoreProperties("funcionario")
+	private Gerenciador gerenciador;
 
 	//manter apenas em caso de aplicação do Junit
-	public CadastroFuncionario(long id, String nome, String numeroPessoal, long cpf, String equipe, List<LocalDate> entrada, List<LocalDate> saida) {
+	public Funcionario(long id, String nome, String numeroPessoal, long cpf, String equipe, List<Entrada> entrada, List<Saida> saida) {
 		this.id = id;
 		this.nome = nome;
 		this.numeroPessoal = numeroPessoal;
@@ -60,8 +52,9 @@ public class CadastroFuncionario {
 		this.entrada = entrada;
 		this.saida = saida;
 	}
+
 	//manter apenas em caso de aplicação do Junit
-	public CadastroFuncionario() {
+	public Funcionario() {
 	}
 
 	public long getId() {
@@ -104,29 +97,27 @@ public class CadastroFuncionario {
 		this.equipe = equipe;
 	}
 
-
-	public CadastroGerenciador getCadastrogerenciador() {
-		return cadastroGerenciador;
-	}
-
-
-	public void setCadastrogerenciador(CadastroGerenciador cadastrogerenciador) {
-		this.cadastroGerenciador = cadastrogerenciador;
-	}
-	
-	public List<LocalDate> getEntrada() {
+	public List<Entrada> getEntrada() {
 		return entrada;
 	}
 
-	public void setEntrada(LocalDate entrada) {
+	public void setEntrada(Entrada entrada) {
 		this.entrada.add(entrada);
 	}
 
-	public List<LocalDate> getSaida() {
+	public List<Saida> getSaida() {
 		return saida;
 	}
 
-	public void setSaida(LocalDate saida) {
+	public void setSaida(Saida saida) {
 		this.saida.add(saida);
+	}
+
+	public Gerenciador getGerenciador() {
+		return gerenciador;
+	}
+
+	public void setGerenciador(Gerenciador gerenciador) {
+		this.gerenciador = gerenciador;
 	}
 }

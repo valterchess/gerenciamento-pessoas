@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_cadastroGerenciador")
-public class CadastroGerenciador {
+public class Gerenciador {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,13 +46,11 @@ public class CadastroGerenciador {
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
-	@OneToMany(mappedBy = "cadastroGerenciador",cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("cadastroGerenciador")
-	private List<CadastroFuncionario> cadastroFuncionario;
+	@OneToMany(mappedBy = "gerenciador",cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("gerenciador")
+	private List<Funcionario> funcionario;
 
-	
-
-	public CadastroGerenciador(long id, String nome, String numeroPessoal, long cpf, String respEquipe, String usuario, String senha) {
+	public Gerenciador(long id, String nome, String numeroPessoal, long cpf, String respEquipe, String usuario, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.numeroPessoal = numeroPessoal;
@@ -62,7 +60,7 @@ public class CadastroGerenciador {
 		this.senha = senha;
 	}
 
-	public CadastroGerenciador() {
+	public Gerenciador() {
 	}
 
 	public long getId() {
@@ -121,12 +119,12 @@ public class CadastroGerenciador {
 		this.senha = senha;
 	}
 
-	public List<CadastroFuncionario> getCadastroFuncionario() {
-		return cadastroFuncionario;
+	public List<Funcionario> getCadastroFuncionario() {
+		return funcionario;
 	}
 
-	public void setCadastroFuncionario(List<CadastroFuncionario> cadastroFuncionario) {
-		this.cadastroFuncionario = cadastroFuncionario;
+	public void setCadastroFuncionario(List<Funcionario> funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	

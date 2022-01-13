@@ -1,11 +1,11 @@
 package one.digitalinnovation.gerenciamentodepessoas.controller;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.CadastroFuncionario;
-import one.digitalinnovation.gerenciamentodepessoas.model.CadastroGerenciador;
+import one.digitalinnovation.gerenciamentodepessoas.model.Funcionario;
+import one.digitalinnovation.gerenciamentodepessoas.model.Gerenciador;
 import one.digitalinnovation.gerenciamentodepessoas.model.GerenciadorLogin;
-import one.digitalinnovation.gerenciamentodepessoas.repository.CadastroFuncionarioRepository;
-import one.digitalinnovation.gerenciamentodepessoas.repository.CadastroGerenciadorRepository;
-import one.digitalinnovation.gerenciamentodepessoas.service.CadastroGerenciadorService;
+import one.digitalinnovation.gerenciamentodepessoas.repository.FuncionarioRepository;
+import one.digitalinnovation.gerenciamentodepessoas.repository.GerenciadorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.service.GerenciadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,30 +20,30 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CadastroGerenciadorController {
     @Autowired
-    private CadastroGerenciadorService gerenciadorService;
+    private GerenciadorService gerenciadorService;
     @Autowired
-    private CadastroGerenciadorRepository gerenciadorRepository;
+    private GerenciadorRepository gerenciadorRepository;
     @Autowired
-    private CadastroFuncionarioRepository funcionarioRepository;
+    private FuncionarioRepository funcionarioRepository;
 
     @GetMapping("/all")
-    public ResponseEntity<List<CadastroGerenciador>> getAll(){
+    public ResponseEntity<List<Gerenciador>> getAll(){
         return ResponseEntity.ok(gerenciadorRepository.findAll());
     }
 
     @GetMapping("/gerenciador/{funcionario}")
-    public ResponseEntity<List<CadastroFuncionario>> GetAllfuncionario(){
+    public ResponseEntity<List<Funcionario>> GetAllfuncionario(){
         return ResponseEntity.ok(funcionarioRepository.findAll());
     }
 
     @PostMapping("/cadastrar/gerenciador")
-    public ResponseEntity<CadastroGerenciador> postGerenciador(@Valid @RequestBody CadastroGerenciador gerenciador){
+    public ResponseEntity<Gerenciador> postGerenciador(@Valid @RequestBody Gerenciador gerenciador){
         return gerenciadorService.cadastroGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
     @PostMapping("/cadastrar/funcionario")
-    public ResponseEntity<CadastroFuncionario> postFuncionario(@Valid @RequestBody CadastroFuncionario funcionario){
+    public ResponseEntity<Funcionario> postFuncionario(@Valid @RequestBody Funcionario funcionario){
         return gerenciadorService.cadastroFuncionario(funcionario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
@@ -57,14 +57,14 @@ public class CadastroGerenciadorController {
     }
 
     @PutMapping("/atualizar")
-    public ResponseEntity<CadastroGerenciador> putGerenciador(@Valid @RequestBody CadastroGerenciador gerenciador){
+    public ResponseEntity<Gerenciador> putGerenciador(@Valid @RequestBody Gerenciador gerenciador){
         return gerenciadorService.atualizarGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/atualizar/funcionario")
-    public ResponseEntity<CadastroFuncionario> putFuncionario(@Valid @RequestBody CadastroFuncionario funcionario){
+    public ResponseEntity<Funcionario> putFuncionario(@Valid @RequestBody Funcionario funcionario){
         return gerenciadorService.atualizarFuncionario(funcionario)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());

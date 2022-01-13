@@ -18,7 +18,7 @@ public class FuncionarioLogin {
 
 	private Date saida;
 
-	private CadastroGerenciador cadastroGerenciador;
+	private Gerenciador gerenciador;
 
 	private String token;
 
@@ -78,12 +78,12 @@ public class FuncionarioLogin {
 		this.saida = saida;
 	}
 
-	public CadastroGerenciador getCadastroGerenciador() {
-		return cadastroGerenciador;
+	public Gerenciador getCadastroGerenciador() {
+		return gerenciador;
 	}
 
-	public void setCadastroGerenciador(CadastroGerenciador cadastroGerenciador) {
-		this.cadastroGerenciador = cadastroGerenciador;
+	public void setCadastroGerenciador(Gerenciador gerenciador) {
+		this.gerenciador = gerenciador;
 	}
 
 	public String getToken() {

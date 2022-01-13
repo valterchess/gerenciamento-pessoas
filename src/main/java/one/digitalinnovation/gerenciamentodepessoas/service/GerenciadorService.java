@@ -13,34 +13,34 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
-public class CadastroGerenciadorService {
+public class GerenciadorService {
 
     @Autowired
-    private CadastroGerenciadorRepository gerenciadorRepository;
+    private GerenciadorRepository gerenciadorRepository;
     @Autowired
-    private CadastroFuncionarioRepository funcionarioRepository;
+    private FuncionarioRepository funcionarioRepository;
 
-    public Optional<CadastroGerenciador> cadastroGerenciador(CadastroGerenciador gerenciador){
+    public Optional<Gerenciador> cadastroGerenciador(Gerenciador gerenciador){
         if (gerenciadorRepository.findByUsuario(gerenciador.getUsuario()).isPresent())
             return Optional.empty();
         gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
         return Optional.of(gerenciadorRepository.save(gerenciador));
     }
 
-    public Optional<CadastroFuncionario> cadastroFuncionario(CadastroFuncionario funcionario){
+    public Optional<Funcionario> cadastroFuncionario(Funcionario funcionario){
         if (funcionarioRepository.findByCpf(funcionario.getCpf()).isPresent())
             return Optional.empty();
         return Optional.of(funcionarioRepository.save(funcionario));
     }
 
-    public Optional<CadastroGerenciador> atualizarGerenciador(CadastroGerenciador gerenciador){
+    public Optional<Gerenciador> atualizarGerenciador(Gerenciador gerenciador){
         if (gerenciadorRepository.findById(gerenciador.getId()).isPresent()){
             return compararGerenciador(gerenciador);
         }
         return Optional.empty();
     }
 
-    public Optional<CadastroFuncionario> atualizarFuncionario(CadastroFuncionario funcionario) {
+    public Optional<Funcionario> atualizarFuncionario(Funcionario funcionario) {
         if (gerenciadorRepository.findById(funcionario.getId()).isPresent()){
             return compararFuncionario(funcionario);
         }
@@ -49,7 +49,7 @@ public class CadastroGerenciadorService {
 
 
     public Optional<GerenciadorLogin> autenticarGerenciador(Optional<GerenciadorLogin> gerenciadorLogin){
-        Optional<CadastroGerenciador> gerenciador = gerenciadorRepository.findByUsuario(gerenciadorLogin.get().getUsuario());
+        Optional<Gerenciador> gerenciador = gerenciadorRepository.findByUsuario(gerenciadorLogin.get().getUsuario());
         if(gerenciador.isPresent()){
             if(compararSenhas(gerenciadorLogin.get().getSenha(), gerenciador.get().getSenha())){
                 String token = gerarBasicToken(gerenciador.get().getUsuario(), gerenciadorLogin.get().getSenha());
@@ -78,7 +78,7 @@ public class CadastroGerenciadorService {
         return encoder.encode(senha);
     }
 
-    private Optional<CadastroGerenciador> compararGerenciador(CadastroGerenciador gerenciador){
+    private Optional<Gerenciador> compararGerenciador(Gerenciador gerenciador){
         var gerenciadorOp = gerenciadorRepository.findByUsuario(gerenciador.getUsuario());
         var isPresent = gerenciadorOp.isPresent();
         if (isPresent && gerenciador.getId() != gerenciadorOp.get().getId()){
@@ -89,8 +89,8 @@ public class CadastroGerenciadorService {
         return Optional.of(gerenciadorRepository.save(gerenciador));
     }
 
-    private Optional<CadastroFuncionario> compararFuncionario(CadastroFuncionario funcionario) {
-        Optional<CadastroFuncionario> funcionarioOp = funcionarioRepository.findByCpf(funcionario.getCpf());
+    private Optional<Funcionario> compararFuncionario(Funcionario funcionario) {
+        Optional<Funcionario> funcionarioOp = funcionarioRepository.findByCpf(funcionario.getCpf());
         var isPresent = funcionarioOp.isPresent();
         if (isPresent && funcionario.getCpf() != funcionarioOp.get().getId()){
             throw new ResponseStatusException(
@@ -103,6 +103,4 @@ public class CadastroGerenciadorService {
         var encoder = new BCryptPasswordEncoder();
         return encoder.matches(senhaDigitada,senhaDoBanco);
     }
-
 }
-
