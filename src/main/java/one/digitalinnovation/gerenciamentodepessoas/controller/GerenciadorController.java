@@ -18,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/gerenciador")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CadastroGerenciadorController {
+public class GerenciadorController {
     @Autowired
     private GerenciadorService gerenciadorService;
     @Autowired

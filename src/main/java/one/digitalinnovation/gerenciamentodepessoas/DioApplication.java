@@ -18,6 +18,4 @@ private static final String REDIRECT = "redirect:/swagger-ui/";
 	public static void main(String[] args) {
 		SpringApplication.run(DioApplication.class, args);
 	}
-
-
 }

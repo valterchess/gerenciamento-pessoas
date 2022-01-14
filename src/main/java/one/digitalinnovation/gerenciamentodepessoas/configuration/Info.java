@@ -13,7 +13,7 @@ public class Info {
     protected static final String LICENCE_URL = "https://github.com/tholivera";
 
     //contact()
-    protected static final String NOME = "Valter Silva";
+    protected static final String NOME = "Valter Silva e Thaís Oliveira";
     protected static final String GITHUB = "https://github.com/tholivera";
     protected static final String EMAIL = "valter.silva.dev@gmail.com";
 

@@ -12,7 +12,6 @@ public class GerenciadorLogin {
 	private String usuario;
 	private String senha;
 	private String token;
-	private List<CadastroFuncionario> cadastroFuncionario;
 	
 	public long getId() {
 		return id;
@@ -75,13 +74,5 @@ public class GerenciadorLogin {
 	}
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public List<CadastroFuncionario> getCadastroFuncionario() {
-		return cadastroFuncionario;
-	}
-
-	public void setCadastroFuncionario(List<CadastroFuncionario> cadastroFuncionario) {
-		this.cadastroFuncionario = cadastroFuncionario;
 	}
 }

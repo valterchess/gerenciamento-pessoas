@@ -34,7 +34,7 @@ public class Gerenciador {
 
 	@CPF
 	private long cpf;
-
+	//adicionar um atributo tipo do tipo "Tipo.class"
 	@NotBlank(message = "O atributo responsável equipe é obrigatório!")
 	private String respEquipe;
 	
