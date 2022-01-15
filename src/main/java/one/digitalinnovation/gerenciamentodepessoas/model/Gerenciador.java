@@ -119,11 +119,11 @@ public class Gerenciador {
 		this.senha = senha;
 	}
 
-	public List<Funcionario> getCadastroFuncionario() {
+	public List<Funcionario> getFuncionario() {
 		return funcionario;
 	}
 
-	public void setCadastroFuncionario(List<Funcionario> funcionario) {
+	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
 	}
 

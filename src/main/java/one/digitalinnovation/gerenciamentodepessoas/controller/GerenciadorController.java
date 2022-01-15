@@ -31,9 +31,14 @@ public class GerenciadorController {
         return ResponseEntity.ok(gerenciadorRepository.findAll());
     }
 
-    @GetMapping("/gerenciador/{funcionario}")
+    @GetMapping("/funcionarios")
     public ResponseEntity<List<Funcionario>> GetAllfuncionario(){
         return ResponseEntity.ok(funcionarioRepository.findAll());
+    }
+
+    @GetMapping("/equipe/{id}")
+    public ResponseEntity<List<Funcionario>> GetAllEquipe(@PathVariable long id){
+        return ResponseEntity.ok(gerenciadorRepository.findById(id).get().getFuncionario());
     }
 
     @PostMapping("/cadastrar/gerenciador")
@@ -56,7 +61,7 @@ public class GerenciadorController {
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
-    @PutMapping("/atualizar")
+    @PutMapping("/atualizar/gerenciador")
     public ResponseEntity<Gerenciador> putGerenciador(@Valid @RequestBody Gerenciador gerenciador){
         return gerenciadorService.atualizarGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
@@ -70,7 +75,7 @@ public class GerenciadorController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/gerenciador/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         return gerenciadorRepository.findById(id)
                 .map(resposta -> {
