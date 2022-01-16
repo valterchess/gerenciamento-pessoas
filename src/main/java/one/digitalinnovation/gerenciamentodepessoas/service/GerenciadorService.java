@@ -21,14 +21,15 @@ public class GerenciadorService {
     private FuncionarioRepository funcionarioRepository;
 
     public Optional<Gerenciador> cadastroGerenciador(Gerenciador gerenciador){
-        if (gerenciadorRepository.findByUsuario(gerenciador.getUsuario()).isPresent())
+        if (gerenciadorRepository.findByEmail(gerenciador.getEmail()).isPresent())
             return Optional.empty();
         gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
         return Optional.of(gerenciadorRepository.save(gerenciador));
     }
 
     public Optional<Funcionario> cadastroFuncionario(Funcionario funcionario){
-        if (funcionarioRepository.findByCpf(funcionario.getCpf()).isPresent())
+        constroiFuncionario(funcionario);
+        if (funcionarioRepository.findByCredencial(funcionario.getCredencial()).isPresent())
             return Optional.empty();
         return Optional.of(funcionarioRepository.save(funcionario));
     }
@@ -48,16 +49,16 @@ public class GerenciadorService {
     }
 
 
-    public Optional<GerenciadorLogin> autenticarGerenciador(Optional<GerenciadorLogin> gerenciadorLogin){
-        Optional<Gerenciador> gerenciador = gerenciadorRepository.findByUsuario(gerenciadorLogin.get().getUsuario());
+    public Optional<GerenciadorLogin> autenticarGerenciador(GerenciadorLogin gerenciadorLogin){
+        Optional<Gerenciador> gerenciador = gerenciadorRepository.findByEmail(gerenciadorLogin.getEmail());
         if(gerenciador.isPresent()){
-            if(compararSenhas(gerenciadorLogin.get().getSenha(), gerenciador.get().getSenha())){
-                String token = gerarBasicToken(gerenciador.get().getUsuario(), gerenciadorLogin.get().getSenha());
-                gerenciadorLogin.get().setId(gerenciador.get().getId());
-                gerenciadorLogin.get().setNome(gerenciador.get().getNome());
-                gerenciadorLogin.get().setSenha(gerenciador.get().getSenha());
-                gerenciadorLogin.get().setToken(token);
-                return gerenciadorLogin;
+            if(compararSenhas(gerenciadorLogin.getSenha(), gerenciador.get().getSenha())){
+                String token = gerarBasicToken(gerenciador.get().getEmail(), gerenciadorLogin.getSenha());
+                gerenciadorLogin.setId(gerenciador.get().getId());
+                gerenciadorLogin.setNome(gerenciador.get().getNome());
+                gerenciadorLogin.setSenha(gerenciador.get().getSenha());
+                gerenciadorLogin.setToken(token);
+                return Optional.of(gerenciadorLogin);
             }
         }
         return Optional.empty();
@@ -79,7 +80,7 @@ public class GerenciadorService {
     }
 
     private Optional<Gerenciador> compararGerenciador(Gerenciador gerenciador){
-        var gerenciadorOp = gerenciadorRepository.findByUsuario(gerenciador.getUsuario());
+        var gerenciadorOp = gerenciadorRepository.findByEmail(gerenciador.getEmail());
         var isPresent = gerenciadorOp.isPresent();
         if (isPresent && gerenciador.getId() != gerenciadorOp.get().getId()){
             throw new ResponseStatusException(
@@ -90,17 +91,38 @@ public class GerenciadorService {
     }
 
     private Optional<Funcionario> compararFuncionario(Funcionario funcionario) {
-        Optional<Funcionario> funcionarioOp = funcionarioRepository.findByCpf(funcionario.getCpf());
+        Optional<Funcionario> funcionarioOp = funcionarioRepository.findByCredencial(funcionario.getCredencial());
         var isPresent = funcionarioOp.isPresent();
-        if (isPresent && funcionario.getCpf() != funcionarioOp.get().getId()){
+        if (isPresent && funcionario.getId() != funcionarioOp.get().getId()){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "O Funcionario já existe!", null);
         }
         return Optional.of(funcionarioRepository.save(funcionario));
     }
 
+    private void constroiFuncionario(Funcionario funcionario) {
+        setor(funcionario);
+        String credencial = geraCredencial(funcionario);
+        System.out.println(credencial);
+        funcionario.setCredencial(credencial);
+    }
+
     private boolean compararSenhas(String senhaDigitada, String senhaDoBanco){
         var encoder = new BCryptPasswordEncoder();
         return encoder.matches(senhaDigitada,senhaDoBanco);
+    }
+
+    private String geraCredencial(Funcionario funcionario){
+        String random = String.valueOf((int)(Math.random() * 99));
+        return "S-"
+                + funcionario.getSetor() + ":"
+                + funcionario.getNome().toLowerCase()
+                + "-"
+                + random;
+    }
+    private void setor(Funcionario funcionario) {
+        Optional<Gerenciador> gerenciador = gerenciadorRepository.findById(funcionario.getGerenciador().getId());
+        int setor = gerenciador.get().getSetor();
+        funcionario.setSetor(setor);
     }
 }

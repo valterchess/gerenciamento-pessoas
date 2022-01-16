@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_entrada")
@@ -13,14 +14,15 @@ public class Entrada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDate entrada;
+    //alterar o pattern date time format
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime entrada;
 
     @ManyToOne
     @JsonIgnoreProperties("entrada")
     private Funcionario funcionario;
 
-    public Entrada(LocalDate entrada, Funcionario funcionario) {
+    public Entrada(LocalDateTime entrada, Funcionario funcionario) {
         this.entrada = entrada;
         this.funcionario = funcionario;
     }
@@ -36,11 +38,11 @@ public class Entrada {
         this.id = id;
     }
 
-    public LocalDate getEntrada() {
+    public LocalDateTime getEntrada() {
         return entrada;
     }
 
-    public void setEntrada(LocalDate entrada) {
+    public void setEntrada(LocalDateTime entrada) {
         this.entrada = entrada;
     }
 

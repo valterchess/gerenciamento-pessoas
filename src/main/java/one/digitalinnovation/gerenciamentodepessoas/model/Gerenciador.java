@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_cadastroGerenciador")
+@Table(name = "tb_gerenciador")
 public class Gerenciador {
 
 	@Id
@@ -29,18 +29,13 @@ public class Gerenciador {
 	@NotBlank(message = "O atributo nome é obrigatório!")
 	private String nome;
 
-	@NotBlank(message = "O atributo número pessoal é obrigatório!")
-	private String numeroPessoal;
-
-	@CPF
-	private long cpf;
 	//adicionar um atributo tipo do tipo "Tipo.class"
-	@NotBlank(message = "O atributo responsável equipe é obrigatório!")
-	private String respEquipe;
+	@NotNull(message = "O atributo setor é obrigatório!")
+	private int setor;
 	
-	@NotNull(message = "O atributo Usuário é Obrigatório!")
+	@NotBlank(message = "O atributo Usuário é Obrigatório!")
 	@Email(message = "O atributo Usuário deve ser um email!")
-	private String usuario;
+	private String email;
 
 	@NotBlank(message = "O atributo Senha é Obrigatória!")
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
@@ -49,19 +44,6 @@ public class Gerenciador {
 	@OneToMany(mappedBy = "gerenciador",cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("gerenciador")
 	private List<Funcionario> funcionario;
-
-	public Gerenciador(long id, String nome, String numeroPessoal, long cpf, String respEquipe, String usuario, String senha) {
-		this.id = id;
-		this.nome = nome;
-		this.numeroPessoal = numeroPessoal;
-		this.cpf = cpf;
-		this.respEquipe = respEquipe;
-		this.usuario = usuario;
-		this.senha = senha;
-	}
-
-	public Gerenciador() {
-	}
 
 	public long getId() {
 		return id;
@@ -79,36 +61,20 @@ public class Gerenciador {
 		this.nome = nome;
 	}
 
-	public String getNumeroPessoal() {
-		return numeroPessoal;
+	public int getSetor() {
+		return setor;
 	}
 
-	public void setNumeroPessoal(String numeroPessoal) {
-		this.numeroPessoal = numeroPessoal;
+	public void setSetor(int setor) {
+		this.setor = setor;
 	}
 
-	public long getCpf() {
-		return cpf;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCpf(long cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getRespEquipe() {
-		return respEquipe;
-	}
-
-	public void setRespEquipe(String respEquipe) {
-		this.respEquipe = respEquipe;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -126,7 +92,4 @@ public class Gerenciador {
 	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
 	}
-
-	
-
 }

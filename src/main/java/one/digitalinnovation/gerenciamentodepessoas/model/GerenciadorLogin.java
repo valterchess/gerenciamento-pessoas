@@ -6,10 +6,8 @@ public class GerenciadorLogin {
 
 	private long id;
 	private String nome;
-	private String numeroPessoal;
-	private long cpf;
-	private String respEquipe;
-	private String usuario;
+	private int setor;
+	private String email;
 	private String senha;
 	private String token;
 	
@@ -29,36 +27,20 @@ public class GerenciadorLogin {
 		this.nome = nome;
 	}
 
-	public String getNumeroPessoal() {
-		return numeroPessoal;
+	public int getSetor() {
+		return setor;
 	}
 
-	public void setNumeroPessoal(String numeroPessoal) {
-		this.numeroPessoal = numeroPessoal;
+	public void setSetor(int setor) {
+		this.setor = setor;
 	}
 
-	public long getCpf() {
-		return cpf;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCpf(long cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getRespEquipe() {
-		return respEquipe;
-	}
-
-	public void setRespEquipe(String respEquipe) {
-		this.respEquipe = respEquipe;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {

@@ -1,10 +1,7 @@
 package one.digitalinnovation.gerenciamentodepessoas.controller;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.Funcionario;
-import one.digitalinnovation.gerenciamentodepessoas.model.Gerenciador;
-import one.digitalinnovation.gerenciamentodepessoas.model.GerenciadorLogin;
-import one.digitalinnovation.gerenciamentodepessoas.repository.FuncionarioRepository;
-import one.digitalinnovation.gerenciamentodepessoas.repository.GerenciadorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.model.*;
+import one.digitalinnovation.gerenciamentodepessoas.repository.*;
 import one.digitalinnovation.gerenciamentodepessoas.service.GerenciadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +52,7 @@ public class GerenciadorController {
     }
 
     @PostMapping("/logar")
-    public ResponseEntity<GerenciadorLogin> login(@RequestBody Optional<GerenciadorLogin> gerenciador){
+    public ResponseEntity<GerenciadorLogin> login(@RequestBody GerenciadorLogin  gerenciador){
         return gerenciadorService.autenticarGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
@@ -75,6 +72,9 @@ public class GerenciadorController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+
+    //adicionar uma verificação do tipo de gerenciador na service
+    // Se o gerenciador for do tipo "admin", autorizar. Se não, negar a requisição
     @DeleteMapping("/delete/gerenciador/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         return gerenciadorRepository.findById(id)
@@ -84,6 +84,11 @@ public class GerenciadorController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
+    /***
+     adicionar uma verificação na service. Se o gerenciador for do tipo "admin"
+     ou o funcionário pertencer a equipe do responśavel, autorizar.
+     Se não, negar a requisição
+     */
     @DeleteMapping("/delete/funcionario/{id}")
     public ResponseEntity<?> deleteFuncionario(@PathVariable long id){
         return funcionarioRepository.findById(id)

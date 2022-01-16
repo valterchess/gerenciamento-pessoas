@@ -1,13 +1,10 @@
 package one.digitalinnovation.gerenciamentodepessoas.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-
-import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -21,14 +18,9 @@ public class Funcionario {
 	@NotBlank(message = "O atributo nome é obrigatório!")
 	private String nome;
 
-	@NotBlank(message = "O atributo número pessoal é obrigatório!")
-	private String numeroPessoal;
+	private String credencial;
 
-	@CPF
-	private long cpf;
-
-	@NotBlank(message = "O atributo equipe é obrigatório!")
-	private String equipe;
+	private int setor;
 
 	@OneToMany(mappedBy = "funcionario",cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("funcionario")
@@ -41,21 +33,6 @@ public class Funcionario {
 	@ManyToOne
 	@JsonIgnoreProperties("funcionario")
 	private Gerenciador gerenciador;
-
-	//manter apenas em caso de aplicação do Junit
-	public Funcionario(long id, String nome, String numeroPessoal, long cpf, String equipe, List<Entrada> entrada, List<Saida> saida) {
-		this.id = id;
-		this.nome = nome;
-		this.numeroPessoal = numeroPessoal;
-		this.cpf = cpf;
-		this.equipe = equipe;
-		this.entrada = entrada;
-		this.saida = saida;
-	}
-
-	//manter apenas em caso de aplicação do Junit
-	public Funcionario() {
-	}
 
 	public long getId() {
 		return id;
@@ -73,28 +50,20 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public String getNumeroPessoal() {
-		return numeroPessoal;
+	public String getCredencial() {
+		return credencial;
 	}
 
-	public void setNumeroPessoal(String numeroPessoal) {
-		this.numeroPessoal = numeroPessoal;
+	public void setCredencial(String credencial) {
+		this.credencial = credencial;
 	}
 
-	public long getCpf() {
-		return cpf;
+	public int getSetor() {
+		return setor;
 	}
 
-	public void setCpf(long cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getEquipe() {
-		return equipe;
-	}
-
-	public void setEquipe(String equipe) {
-		this.equipe = equipe;
+	public void setSetor(int setor) {
+		this.setor = setor;
 	}
 
 	public List<Entrada> getEntrada() {
@@ -104,7 +73,6 @@ public class Funcionario {
 	public void setEntrada(Entrada entrada) {
 		this.entrada.add(entrada);
 	}
-
 	public List<Saida> getSaida() {
 		return saida;
 	}

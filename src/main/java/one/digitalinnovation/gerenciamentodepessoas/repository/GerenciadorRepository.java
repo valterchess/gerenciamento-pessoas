@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface GerenciadorRepository extends JpaRepository<Gerenciador, Long> {
-    Optional<Gerenciador> findByUsuario(String userName);
+    Optional<Gerenciador> findByEmail(String email);
 
 }
