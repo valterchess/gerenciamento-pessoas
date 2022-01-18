@@ -1,6 +1,5 @@
 package one.digitalinnovation.gerenciamentodepessoas.model;
 
-import java.util.List;
 
 public class GerenciadorLogin {
 

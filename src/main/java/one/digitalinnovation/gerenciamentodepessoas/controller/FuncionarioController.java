@@ -1,7 +1,6 @@
 package one.digitalinnovation.gerenciamentodepessoas.controller;
 
 import one.digitalinnovation.gerenciamentodepessoas.model.Entrada;
-import one.digitalinnovation.gerenciamentodepessoas.model.Funcionario;
 import one.digitalinnovation.gerenciamentodepessoas.model.Saida;
 import one.digitalinnovation.gerenciamentodepessoas.repository.EntradaRepository;
 import one.digitalinnovation.gerenciamentodepessoas.repository.FuncionarioRepository;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Clock;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
