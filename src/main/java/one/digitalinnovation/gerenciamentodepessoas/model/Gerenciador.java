@@ -28,16 +28,16 @@ public class Gerenciador {
 	@NotBlank(message = "O atributo nome é obrigatório!")
 	private String nome;
 
-	//adicionar um atributo tipo do tipo "Tipo.class"
+	//adicionar um atributo tipo instanciado de "Tipo.class"
 	@NotNull(message = "O atributo setor é obrigatório!")
 	private int setor;
 	
-	@NotBlank(message = "O atributo Usuário é Obrigatório!")
-	@Email(message = "O atributo Usuário deve ser um email!")
+	@NotBlank(message = "O atributo Email é Obrigatório!")
+	@Email()
 	private String email;
 
 	@NotBlank(message = "O atributo Senha é Obrigatória!")
-	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
+	@Size(min = 8, max = 30, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
 	@OneToMany(mappedBy = "gerenciador",cascade = CascadeType.ALL)
