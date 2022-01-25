@@ -1,10 +1,10 @@
-package one.digitalinnovation.gerenciamentodepessoas.controller;
+package one.digitalinnovation.gerenciamentodepessoas.api.controller;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.Entrada;
-import one.digitalinnovation.gerenciamentodepessoas.model.Saida;
-import one.digitalinnovation.gerenciamentodepessoas.repository.EntradaRepository;
-import one.digitalinnovation.gerenciamentodepessoas.repository.FuncionarioRepository;
-import one.digitalinnovation.gerenciamentodepessoas.repository.SaidaRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.Entrada;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.Saida;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.EntradaRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.FuncionarioRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.SaidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

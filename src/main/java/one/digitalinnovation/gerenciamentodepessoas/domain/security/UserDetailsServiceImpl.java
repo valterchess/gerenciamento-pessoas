@@ -1,7 +1,7 @@
-package one.digitalinnovation.gerenciamentodepessoas.security;
+package one.digitalinnovation.gerenciamentodepessoas.domain.security;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.Gerenciador;
-import one.digitalinnovation.gerenciamentodepessoas.repository.GerenciadorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.SupervisorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,11 +14,11 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private GerenciadorRepository gerenciadorRepository;
+    private SupervisorRepository gerenciadorRepository;
 
     @Override
     public UserDetails loadUserByUsername (String userName) throws UsernameNotFoundException {
-        Optional<Gerenciador> gerenciador = gerenciadorRepository.findByEmail(userName);
+        Optional<Supervisor> gerenciador = gerenciadorRepository.findByEmail(userName);
         gerenciador.orElseThrow(() -> new UsernameNotFoundException(userName + " not found."));
 
         return gerenciador.map(UserDetailsImpl::new).get();

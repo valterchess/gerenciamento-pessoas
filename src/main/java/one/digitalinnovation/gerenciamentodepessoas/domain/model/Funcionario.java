@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class Funcionario {
 	
 	@ManyToOne
 	@JsonIgnoreProperties("funcionario")
-	private Gerenciador gerenciador;
+	private Supervisor supervisor;
 
 	public long getId() {
 		return id;
@@ -80,11 +80,11 @@ public class Funcionario {
 		this.saida.add(saida);
 	}
 
-	public Gerenciador getGerenciador() {
-		return gerenciador;
+	public Supervisor getSupervisor() {
+		return supervisor;
 	}
 
-	public void setGerenciador(Gerenciador gerenciador) {
-		this.gerenciador = gerenciador;
+	public void setSupervisor(Supervisor supervisor) {
+		this.supervisor = supervisor;
 	}
 }

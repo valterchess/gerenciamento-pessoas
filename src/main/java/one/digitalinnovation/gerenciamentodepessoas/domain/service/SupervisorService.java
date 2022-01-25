@@ -1,7 +1,7 @@
-package one.digitalinnovation.gerenciamentodepessoas.service;
+package one.digitalinnovation.gerenciamentodepessoas.domain.service;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.*;
-import one.digitalinnovation.gerenciamentodepessoas.repository.*;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.*;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.*;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,18 +13,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
-public class GerenciadorService {
+public class SupervisorService {
 
     @Autowired
-    private GerenciadorRepository gerenciadorRepository;
+    private SupervisorRepository supervisorRepository;
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    public Optional<Gerenciador> cadastroGerenciador(Gerenciador gerenciador){
-        if (gerenciadorRepository.findByEmail(gerenciador.getEmail()).isPresent())
+    public Optional<Supervisor> cadastroGerenciador(Supervisor gerenciador){
+        if (supervisorRepository.findByEmail(gerenciador.getEmail()).isPresent())
             return Optional.empty();
         gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
-        return Optional.of(gerenciadorRepository.save(gerenciador));
+        return Optional.of(supervisorRepository.save(gerenciador));
     }
 
     public Optional<Funcionario> cadastroFuncionario(Funcionario funcionario){
@@ -34,23 +34,23 @@ public class GerenciadorService {
         return Optional.of(funcionarioRepository.save(funcionario));
     }
 
-    public Optional<Gerenciador> atualizarGerenciador(Gerenciador gerenciador){
-        if (gerenciadorRepository.findById(gerenciador.getId()).isPresent()){
+    public Optional<Supervisor> atualizarGerenciador(Supervisor gerenciador){
+        if (supervisorRepository.findById(gerenciador.getId()).isPresent()){
             return compararGerenciador(gerenciador);
         }
         return Optional.empty();
     }
 
     public Optional<Funcionario> atualizarFuncionario(Funcionario funcionario) {
-        if (gerenciadorRepository.findById(funcionario.getId()).isPresent()){
+        if (supervisorRepository.findById(funcionario.getId()).isPresent()){
             return compararFuncionario(funcionario);
         }
         return Optional.empty();
     }
 
 
-    public Optional<GerenciadorLogin> autenticarGerenciador(GerenciadorLogin gerenciadorLogin){
-        Optional<Gerenciador> gerenciador = gerenciadorRepository.findByEmail(gerenciadorLogin.getEmail());
+    public Optional<SupervisorLogin> autenticarGerenciador(SupervisorLogin gerenciadorLogin){
+        Optional<Supervisor> gerenciador = supervisorRepository.findByEmail(gerenciadorLogin.getEmail());
         if(gerenciador.isPresent()){
             if(compararSenhas(gerenciadorLogin.getSenha(), gerenciador.get().getSenha())){
                 String token = gerarBasicToken(gerenciador.get().getEmail(), gerenciadorLogin.getSenha());
@@ -79,15 +79,15 @@ public class GerenciadorService {
         return encoder.encode(senha);
     }
 
-    private Optional<Gerenciador> compararGerenciador(Gerenciador gerenciador){
-        var gerenciadorOp = gerenciadorRepository.findByEmail(gerenciador.getEmail());
+    private Optional<Supervisor> compararGerenciador(Supervisor gerenciador){
+        var gerenciadorOp = supervisorRepository.findByEmail(gerenciador.getEmail());
         var isPresent = gerenciadorOp.isPresent();
         if (isPresent && gerenciador.getId() != gerenciadorOp.get().getId()){
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "O Gerenciador já existe!", null);
+                    HttpStatus.BAD_REQUEST, "O Supervisor já existe!", null);
         }
         gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
-        return Optional.of(gerenciadorRepository.save(gerenciador));
+        return Optional.of(supervisorRepository.save(gerenciador));
     }
 
     private Optional<Funcionario> compararFuncionario(Funcionario funcionario) {
@@ -121,7 +121,7 @@ public class GerenciadorService {
                 + random;
     }
     private void setor(Funcionario funcionario) {
-        Optional<Gerenciador> gerenciador = gerenciadorRepository.findById(funcionario.getGerenciador().getId());
+        Optional<Supervisor> gerenciador = supervisorRepository.findById(funcionario.getSupervisor().getId());
         int setor = gerenciador.get().getSetor();
         funcionario.setSetor(setor);
     }

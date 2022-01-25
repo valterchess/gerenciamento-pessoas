@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.configuration;
+package one.digitalinnovation.gerenciamentodepessoas.shared.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +12,15 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-import static one.digitalinnovation.gerenciamentodepessoas.configuration.Info.*;
+import static one.digitalinnovation.gerenciamentodepessoas.shared.configuration.Info.*;
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean

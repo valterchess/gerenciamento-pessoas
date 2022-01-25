@@ -1,8 +1,8 @@
-package one.digitalinnovation.gerenciamentodepessoas.controller;
+package one.digitalinnovation.gerenciamentodepessoas.api.controller;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.*;
-import one.digitalinnovation.gerenciamentodepessoas.repository.*;
-import one.digitalinnovation.gerenciamentodepessoas.service.GerenciadorService;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.*;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.*;
+import one.digitalinnovation.gerenciamentodepessoas.domain.service.SupervisorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +12,18 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/gerenciador")
+@RequestMapping("/supervisor")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class GerenciadorController {
+public class SupervisorController {
     @Autowired
-    private GerenciadorService gerenciadorService;
+    private SupervisorService gerenciadorService;
     @Autowired
-    private GerenciadorRepository gerenciadorRepository;
+    private SupervisorRepository gerenciadorRepository;
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Gerenciador>> getAll(){
+    public ResponseEntity<List<Supervisor>> getAll(){
         return ResponseEntity.ok(gerenciadorRepository.findAll());
     }
 
@@ -37,8 +37,8 @@ public class GerenciadorController {
         return ResponseEntity.ok(gerenciadorRepository.findById(id).get().getFuncionario());
     }
 
-    @PostMapping("/cadastrar/gerenciador")
-    public ResponseEntity<Gerenciador> postGerenciador(@Valid @RequestBody Gerenciador gerenciador){
+    @PostMapping("/cadastrar/supervisor")
+    public ResponseEntity<Supervisor> postGerenciador(@Valid @RequestBody Supervisor gerenciador){
         return gerenciadorService.cadastroGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
@@ -51,20 +51,20 @@ public class GerenciadorController {
     }
 
     @PostMapping("/logar")
-    public ResponseEntity<GerenciadorLogin> login(@RequestBody GerenciadorLogin  gerenciador){
+    public ResponseEntity<SupervisorLogin> login(@RequestBody SupervisorLogin gerenciador){
         return gerenciadorService.autenticarGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
-    @PutMapping("/atualizar/gerenciador")
-    public ResponseEntity<Gerenciador> putGerenciador(@Valid @RequestBody Gerenciador gerenciador){
+    @PutMapping("/atualizar/supervisor")
+    public ResponseEntity<Supervisor> putGerenciador(@Valid @RequestBody Supervisor gerenciador){
         return gerenciadorService.atualizarGerenciador(gerenciador)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PutMapping("/atualizar/funcionario")
+    @PutMapping("/atualizar/supervisor")
     public ResponseEntity<Funcionario> putFuncionario(@Valid @RequestBody Funcionario funcionario){
         return gerenciadorService.atualizarFuncionario(funcionario)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
@@ -74,7 +74,7 @@ public class GerenciadorController {
 
     //adicionar uma verificação do tipo de gerenciador na service
     // Se o gerenciador for do tipo "admin", autorizar. Se não, negar a requisição
-    @DeleteMapping("/delete/gerenciador/{id}")
+    @DeleteMapping("/delete/supervisor/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         return gerenciadorRepository.findById(id)
                 .map(resposta -> {

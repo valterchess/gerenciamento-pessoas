@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,25 +7,26 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_saida")
-public class Saida {
+@Table(name = "tb_entrada")
+public class Entrada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime saida;
+    //alterar o pattern date time format
+    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm:ss a")
+    private LocalDateTime entrada;
 
     @ManyToOne
-    @JsonIgnoreProperties("saida")
+    @JsonIgnoreProperties("entrada")
     private Funcionario funcionario;
 
-    public Saida(LocalDateTime saida, Funcionario funcionario) {
-        this.saida = saida;
+    public Entrada(LocalDateTime entrada, Funcionario funcionario) {
+        this.entrada = entrada;
         this.funcionario = funcionario;
     }
 
-    public Saida() {
+    public Entrada() {
     }
 
     public long getId() {
@@ -36,12 +37,12 @@ public class Saida {
         this.id = id;
     }
 
-    public LocalDateTime getSaida() {
-        return saida;
+    public LocalDateTime getEntrada() {
+        return entrada;
     }
 
-    public void setSaida(LocalDateTime saida) {
-        this.saida = saida;
+    public void setEntrada(LocalDateTime entrada) {
+        this.entrada = entrada;
     }
 
     public Funcionario getFuncionario() {

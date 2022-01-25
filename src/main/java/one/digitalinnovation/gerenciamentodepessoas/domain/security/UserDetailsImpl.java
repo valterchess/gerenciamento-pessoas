@@ -1,6 +1,6 @@
-package one.digitalinnovation.gerenciamentodepessoas.security;
+package one.digitalinnovation.gerenciamentodepessoas.domain.security;
 
-import one.digitalinnovation.gerenciamentodepessoas.model.Gerenciador;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,7 +17,7 @@ public class UserDetailsImpl implements UserDetails {
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Gerenciador gerenciador){
+    public UserDetailsImpl(Supervisor gerenciador){
         this.userName = gerenciador.getEmail();
         this.password = gerenciador.getSenha();
     }

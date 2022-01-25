@@ -1,7 +1,7 @@
-package one.digitalinnovation.gerenciamentodepessoas.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model;
 
 
-public class GerenciadorLogin {
+public class SupervisorLogin {
 
 	private long id;
 	private String nome;

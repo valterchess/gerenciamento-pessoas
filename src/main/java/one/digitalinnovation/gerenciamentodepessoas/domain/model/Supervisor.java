@@ -1,25 +1,18 @@
-package one.digitalinnovation.gerenciamentodepessoas.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_gerenciador")
-public class Gerenciador {
+@Table(name = "tb_supervisor")
+public class Supervisor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,15 +26,19 @@ public class Gerenciador {
 	private int setor;
 	
 	@NotBlank(message = "O atributo Email é Obrigatório!")
-	@Email()
+	@Email(message = "O atributo precisa ser um email.")
 	private String email;
 
 	@NotBlank(message = "O atributo Senha é Obrigatória!")
 	@Size(min = 8, max = 30, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 
-	@OneToMany(mappedBy = "gerenciador",cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("gerenciador")
+	@ManyToOne
+	@JsonIgnoreProperties("supervisor")
+	private Gerente gerente;
+
+	@OneToMany(mappedBy = "supervisor",cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("supervisor")
 	private List<Funcionario> funcionario;
 
 	public long getId() {

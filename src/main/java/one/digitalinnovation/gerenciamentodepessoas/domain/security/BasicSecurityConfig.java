@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.security;
+package one.digitalinnovation.gerenciamentodepessoas.domain.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +36,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         http.authorizeRequests()
-                .antMatchers("/gerenciador/logar").permitAll()
-                .antMatchers("/gerenciador/cadastrar").permitAll()
+                .antMatchers("/supervisor/logar").permitAll()
+                .antMatchers("/supervisor/cadastrar").permitAll()
+                .antMatchers("/gerente/logar").permitAll()
+                .antMatchers("/gerente/cadastrar").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
