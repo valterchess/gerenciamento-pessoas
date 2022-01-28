@@ -20,25 +20,11 @@ public class SupervisorService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    public Optional<Supervisor> cadastroGerenciador(Supervisor gerenciador){
-        if (supervisorRepository.findByEmail(gerenciador.getEmail()).isPresent())
-            return Optional.empty();
-        gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
-        return Optional.of(supervisorRepository.save(gerenciador));
-    }
-
     public Optional<Funcionario> cadastroFuncionario(Funcionario funcionario){
         constroiFuncionario(funcionario);
         if (funcionarioRepository.findByCredencial(funcionario.getCredencial()).isPresent())
             return Optional.empty();
         return Optional.of(funcionarioRepository.save(funcionario));
-    }
-
-    public Optional<Supervisor> atualizarGerenciador(Supervisor gerenciador){
-        if (supervisorRepository.findById(gerenciador.getId()).isPresent()){
-            return compararGerenciador(gerenciador);
-        }
-        return Optional.empty();
     }
 
     public Optional<Funcionario> atualizarFuncionario(Funcionario funcionario) {
@@ -48,17 +34,16 @@ public class SupervisorService {
         return Optional.empty();
     }
 
-
-    public Optional<SupervisorLogin> autenticarGerenciador(SupervisorLogin gerenciadorLogin){
-        Optional<Supervisor> gerenciador = supervisorRepository.findByEmail(gerenciadorLogin.getEmail());
+    public Optional<SupervisorLogin> autenticarSupervisor(SupervisorLogin supervisorLogin){
+        Optional<Supervisor> gerenciador = supervisorRepository.findByEmail(supervisorLogin.getEmail());
         if(gerenciador.isPresent()){
-            if(compararSenhas(gerenciadorLogin.getSenha(), gerenciador.get().getSenha())){
-                String token = gerarBasicToken(gerenciador.get().getEmail(), gerenciadorLogin.getSenha());
-                gerenciadorLogin.setId(gerenciador.get().getId());
-                gerenciadorLogin.setNome(gerenciador.get().getNome());
-                gerenciadorLogin.setSenha(gerenciador.get().getSenha());
-                gerenciadorLogin.setToken(token);
-                return Optional.of(gerenciadorLogin);
+            if(compararSenhas(supervisorLogin.getSenha(), gerenciador.get().getSenha())){
+                String token = gerarBasicToken(gerenciador.get().getEmail(), supervisorLogin.getSenha());
+                supervisorLogin.setId(gerenciador.get().getId());
+                supervisorLogin.setNome(gerenciador.get().getNome());
+                supervisorLogin.setSenha(gerenciador.get().getSenha());
+                supervisorLogin.setToken(token);
+                return Optional.of(supervisorLogin);
             }
         }
         return Optional.empty();
@@ -72,22 +57,6 @@ public class SupervisorService {
         String tokenBase = usuario + ":" + senha;
         byte[] tokenBase64 = Base64.encodeBase64(tokenBase.getBytes(StandardCharsets.US_ASCII));
         return "Basic " + new String(tokenBase64);
-    }
-
-    private String criptografaSenha(String senha){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(senha);
-    }
-
-    private Optional<Supervisor> compararGerenciador(Supervisor gerenciador){
-        var gerenciadorOp = supervisorRepository.findByEmail(gerenciador.getEmail());
-        var isPresent = gerenciadorOp.isPresent();
-        if (isPresent && gerenciador.getId() != gerenciadorOp.get().getId()){
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "O Supervisor já existe!", null);
-        }
-        gerenciador.setSenha(criptografaSenha(gerenciador.getSenha()));
-        return Optional.of(supervisorRepository.save(gerenciador));
     }
 
     private Optional<Funcionario> compararFuncionario(Funcionario funcionario) {

@@ -9,5 +9,4 @@ import java.util.Optional;
 @Repository
 public interface SupervisorRepository extends JpaRepository<Supervisor, Long> {
     Optional<Supervisor> findByEmail(String email);
-
 }

@@ -16,80 +16,45 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SupervisorController {
     @Autowired
-    private SupervisorService gerenciadorService;
+    private SupervisorService supervisorService;
     @Autowired
-    private SupervisorRepository gerenciadorRepository;
+    private SupervisorRepository supervisorRepository;
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Supervisor>> getAll(){
-        return ResponseEntity.ok(gerenciadorRepository.findAll());
+    @GetMapping("/equipe/{id}")
+    public ResponseEntity<List<Funcionario>> equipe(@PathVariable long id){
+        return ResponseEntity.ok(supervisorRepository.findById(id).get().getFuncionario());
     }
 
     @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> GetAllfuncionario(){
+    public ResponseEntity<List<Funcionario>> funcionarios(){
         return ResponseEntity.ok(funcionarioRepository.findAll());
     }
 
-    @GetMapping("/equipe/{id}")
-    public ResponseEntity<List<Funcionario>> GetAllEquipe(@PathVariable long id){
-        return ResponseEntity.ok(gerenciadorRepository.findById(id).get().getFuncionario());
-    }
-
-    @PostMapping("/cadastrar/supervisor")
-    public ResponseEntity<Supervisor> postGerenciador(@Valid @RequestBody Supervisor gerenciador){
-        return gerenciadorService.cadastroGerenciador(gerenciador)
-                .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
-                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-    }
-    @PostMapping("/cadastrar/funcionario")
+    @PostMapping("/post/funcionario")
     public ResponseEntity<Funcionario> postFuncionario(@Valid @RequestBody Funcionario funcionario){
-        return gerenciadorService.cadastroFuncionario(funcionario)
+        return supervisorService.cadastroFuncionario(funcionario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @PostMapping("/logar")
-    public ResponseEntity<SupervisorLogin> login(@RequestBody SupervisorLogin gerenciador){
-        return gerenciadorService.autenticarGerenciador(gerenciador)
+    public ResponseEntity<SupervisorLogin> login(@RequestBody SupervisorLogin supervisor){
+        return supervisorService.autenticarSupervisor(supervisor)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
-    @PutMapping("/atualizar/supervisor")
-    public ResponseEntity<Supervisor> putGerenciador(@Valid @RequestBody Supervisor gerenciador){
-        return gerenciadorService.atualizarGerenciador(gerenciador)
-                .map(resposta -> ResponseEntity.ok().body(resposta))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
-    @PutMapping("/atualizar/supervisor")
+    @PutMapping("/put/funcionario")
     public ResponseEntity<Funcionario> putFuncionario(@Valid @RequestBody Funcionario funcionario){
-        return gerenciadorService.atualizarFuncionario(funcionario)
+        return supervisorService.atualizarFuncionario(funcionario)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-
-    //adicionar uma verificação do tipo de gerenciador na service
-    // Se o gerenciador for do tipo "admin", autorizar. Se não, negar a requisição
-    @DeleteMapping("/delete/supervisor/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
-        return gerenciadorRepository.findById(id)
-                .map(resposta -> {
-                    gerenciadorRepository.deleteById(id);
-                    return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
-    }
-
-    /***
-     adicionar uma verificação na service. Se o gerenciador for do tipo "admin"
-     ou o funcionário pertencer a equipe do responśavel, autorizar.
-     Se não, negar a requisição
-     */
-    @DeleteMapping("/delete/funcionario/{id}")
-    public ResponseEntity<?> deleteFuncionario(@PathVariable long id){
+    @DeleteMapping("/del/funcionario/{id}")
+    public ResponseEntity<?> delFuncionario(@PathVariable long id){
         return funcionarioRepository.findById(id)
                 .map(resposta -> {
                     funcionarioRepository.deleteById(id);
