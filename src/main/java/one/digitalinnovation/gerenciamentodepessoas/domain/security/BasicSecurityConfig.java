@@ -21,7 +21,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws  Exception{
         auth.userDetailsService(userDetailsService);
-
         auth.inMemoryAuthentication()
                 .withUser("root")
                 .password(passwordEncoder().encode("root"))
@@ -36,10 +35,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         http.authorizeRequests()
-                .antMatchers("/supervisor/logar").permitAll()
-                .antMatchers("/supervisor/cadastrar").permitAll()
                 .antMatchers("/gerente/logar").permitAll()
-                .antMatchers("/gerente/cadastrar").permitAll()
+                .antMatchers("/supervisor/logar").permitAll()
+                .antMatchers("/gerente/post").permitAll()
+                .antMatchers("/supervisor/post").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
