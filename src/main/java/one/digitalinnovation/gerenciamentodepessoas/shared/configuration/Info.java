@@ -8,7 +8,7 @@ public class Info {
     //metadata()
     protected static final String TITULO = "API - Gerenciamento de pessoas";
     protected static final String DESCRICAO = "Projeto API Spring - Gerenciamento de Pessoas";
-    protected static final String VERSAO = "1.2.0";
+    protected static final String VERSAO = "1.4.0";
     protected static final String LICENCE = "Apache License Version 2.0";
     protected static final String LICENCE_URL = "https://github.com/tholivera";
 
