@@ -35,10 +35,10 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
 
         http.authorizeRequests()
-                .antMatchers("/gerente/logar").permitAll()
-                .antMatchers("/supervisor/logar").permitAll()
                 .antMatchers("/gerente/post").permitAll()
                 .antMatchers("/supervisor/post").permitAll()
+                .antMatchers("/gerente/logar").permitAll()
+                .antMatchers("/supervisor/logar").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()

@@ -28,27 +28,27 @@ public class GerenteController {
     private FuncionarioRepository funcionarioRepository;
 
     @GetMapping("/gerentes")
-    public ResponseEntity<List<Gerente>> getAll(){
+    public ResponseEntity<List<Gerente>> get(){
         return ResponseEntity.ok(gerenteRepository.findAll());
     }
 
     @GetMapping("/supervisores")
-    public ResponseEntity<List<Supervisor>> get(){
+    public ResponseEntity<List<Supervisor>> getSupervisores(){
         return ResponseEntity.ok(supervisorRepository.findAll());
     }
 
     @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> GetAllfuncionario(){
+    public ResponseEntity<List<Funcionario>> getfuncionarios(){
         return ResponseEntity.ok(funcionarioRepository.findAll());
     }
 
     @GetMapping("/equipe/{id}")
-    public ResponseEntity<List<Supervisor>> equipe(@PathVariable long id){
+    public ResponseEntity<List<Supervisor>> getEquipe(@PathVariable long id){
         return ResponseEntity.ok(gerenteRepository.findById(id).get().getSupervisor());
     }
 
     @GetMapping("/subequipe/{id}")
-    public ResponseEntity<List<Funcionario>> subEquipe(@PathVariable long id){
+    public ResponseEntity<List<Funcionario>> getSub(@PathVariable long id){
         return ResponseEntity.ok(supervisorRepository.findById(id).get().getFuncionario());
     }
 
@@ -81,14 +81,14 @@ public class GerenteController {
     }
 
     @PutMapping("/put/gerente")
-    public ResponseEntity<Gerente> putGerenciador(@Valid @RequestBody Gerente gerente){
+    public ResponseEntity<Gerente> putGerente(@Valid @RequestBody Gerente gerente){
         return gerenteService.atualizarGerente(gerente)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping("/put/supervisor")
-    public ResponseEntity<Supervisor> putGerenciador(@Valid @RequestBody Supervisor supervisor){
+    public ResponseEntity<Supervisor> putSupervisor(@Valid @RequestBody Supervisor supervisor){
         return gerenteService.atualizarSupervisor(supervisor)
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());

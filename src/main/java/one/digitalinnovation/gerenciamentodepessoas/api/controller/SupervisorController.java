@@ -23,12 +23,12 @@ public class SupervisorController {
     private FuncionarioRepository funcionarioRepository;
 
     @GetMapping("/equipe/{id}")
-    public ResponseEntity<List<Funcionario>> equipe(@PathVariable long id){
+    public ResponseEntity<List<Funcionario>> getEquipe(@PathVariable long id){
         return ResponseEntity.ok(supervisorRepository.findById(id).get().getFuncionario());
     }
 
     @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> funcionarios(){
+    public ResponseEntity<List<Funcionario>> getFuncionarios(){
         return ResponseEntity.ok(funcionarioRepository.findAll());
     }
 
