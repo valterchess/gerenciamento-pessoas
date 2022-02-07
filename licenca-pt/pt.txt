@@ -1,4 +1,7 @@
-Licença Apache
+##############################
+
+
+Licença... Apache
 Versão 2.0, janeiro de 2004
 http://www.apache.org/licenses/
 
