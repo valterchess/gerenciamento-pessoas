@@ -1,6 +1,7 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Conjunto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,10 +28,9 @@ public class Gerente {
     @Size(min = 8, max = 30, message = "A senha precisa ter entre 8 e 30 carácteres")
     private String senha;
 
-    //criar uma classe Conjunto
-    //onde um conjunto tem muitos setores
-    @NotBlank(message = "O atributo Conjunto é obringatório")
-    private String conjunto;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conjunto_id")
+    private Conjunto conjunto;
 
     @OneToMany(mappedBy = "gerente", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("gerente")
@@ -68,11 +68,11 @@ public class Gerente {
         this.senha = senha;
     }
 
-    public String getConjunto() {
+    public Conjunto getConjunto() {
         return conjunto;
     }
 
-    public void setConjunto(String conjunto) {
+    public void setConjunto(Conjunto conjunto) {
         this.conjunto = conjunto;
     }
 

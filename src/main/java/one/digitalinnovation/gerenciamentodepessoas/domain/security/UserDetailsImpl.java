@@ -1,6 +1,6 @@
 package one.digitalinnovation.gerenciamentodepessoas.domain.security;
 
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Supervisor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

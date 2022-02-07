@@ -1,11 +1,13 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors;
 
+
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Predio;
 
 public class SupervisorLogin {
 
 	private long id;
 	private String nome;
-	private int setor;
+	private Predio predio;
 	private String email;
 	private String senha;
 	private String token;
@@ -26,12 +28,12 @@ public class SupervisorLogin {
 		this.nome = nome;
 	}
 
-	public int getSetor() {
-		return setor;
+	public Predio getPredio() {
+		return predio;
 	}
 
-	public void setSetor(int setor) {
-		this.setor = setor;
+	public void setPredio(Predio predio) {
+		this.predio = predio;
 	}
 
 	public String getEmail() {
@@ -56,4 +58,5 @@ public class SupervisorLogin {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
 }

@@ -1,12 +1,11 @@
 package one.digitalinnovation.gerenciamentodepessoas.domain.service;
 
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.Gerente;
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.GerenteLogin;
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.SupervisorLogin;
-import one.digitalinnovation.gerenciamentodepessoas.domain.repository.FuncionarioRepository;
-import one.digitalinnovation.gerenciamentodepessoas.domain.repository.GerenteRepository;
-import one.digitalinnovation.gerenciamentodepessoas.domain.repository.SupervisorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Gerente;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.GerenteLogin;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Supervisor;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.FuncionarioRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.GerenteRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.SupervisorRepository;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

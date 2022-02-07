@@ -1,6 +1,6 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.repository;
+package one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors;
 
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Supervisor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

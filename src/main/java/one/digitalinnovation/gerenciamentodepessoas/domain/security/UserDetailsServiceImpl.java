@@ -1,7 +1,7 @@
 package one.digitalinnovation.gerenciamentodepessoas.domain.security;
 
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.Supervisor;
-import one.digitalinnovation.gerenciamentodepessoas.domain.repository.SupervisorRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Supervisor;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.SupervisorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

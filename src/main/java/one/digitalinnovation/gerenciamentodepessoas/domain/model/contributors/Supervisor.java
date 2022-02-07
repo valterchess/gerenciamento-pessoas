@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Predio;
 
 @Entity
 @Table(name = "tb_supervisor")
@@ -21,10 +22,6 @@ public class Supervisor {
 	@NotBlank(message = "O atributo nome é obrigatório!")
 	private String nome;
 
-	//adicionar um atributo tipo instanciado de "Tipo.class"
-	@NotNull(message = "O atributo setor é obrigatório!")
-	private int setor;
-	
 	@NotBlank(message = "O atributo Email é Obrigatório!")
 	@Email(message = "O atributo precisa ser um email.")
 	private String email;
@@ -41,6 +38,10 @@ public class Supervisor {
 	@JsonIgnoreProperties("supervisor")
 	private List<Funcionario> funcionario;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "predio_id")
+	private Predio predio;
+
 	public long getId() {
 		return id;
 	}
@@ -55,14 +56,6 @@ public class Supervisor {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public int getSetor() {
-		return setor;
-	}
-
-	public void setSetor(int setor) {
-		this.setor = setor;
 	}
 
 	public String getEmail() {
@@ -87,5 +80,21 @@ public class Supervisor {
 
 	public void setFuncionario(List<Funcionario> funcionario) {
 		this.funcionario = funcionario;
+	}
+
+	public Gerente getGerente() {
+		return gerente;
+	}
+
+	public void setGerente(Gerente gerente) {
+		this.gerente = gerente;
+	}
+
+	public Predio getPredio() {
+		return predio;
+	}
+
+	public void setPredio(Predio predio) {
+		this.predio = predio;
 	}
 }

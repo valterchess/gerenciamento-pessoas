@@ -1,11 +1,13 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors;
+
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Conjunto;
 
 public class GerenteLogin {
     private long id;
     private String nome;
     private String email;
     private String senha;
-    private String conjunto;
+    private Conjunto conjunto;
     private String token;
 
     public long getId() {
@@ -40,11 +42,11 @@ public class GerenteLogin {
         this.senha = senha;
     }
 
-    public String getConjunto() {
+    public Conjunto getConjunto() {
         return conjunto;
     }
 
-    public void setConjunto(String conjunto) {
+    public void setConjunto(Conjunto conjunto) {
         this.conjunto = conjunto;
     }
 

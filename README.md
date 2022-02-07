@@ -2,4 +2,5 @@
 
 #Obs.
 ## Adicior Exceptions personalizadas
-### Usar **LOMBOK** para facilitar a construção dos 'modelos'
+## Adicionar Service, buscas especificas e Controller dos Modelos em location
+### Usar LOMBOK ou Record para facilitar a construção dos 'modelos'

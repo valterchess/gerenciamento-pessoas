@@ -1,4 +1,4 @@
-package one.digitalinnovation.gerenciamentodepessoas.domain.model;
+package one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors;
 
 import java.util.List;
 

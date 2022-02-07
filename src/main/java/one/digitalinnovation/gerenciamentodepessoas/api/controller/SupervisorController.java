@@ -1,7 +1,9 @@
 package one.digitalinnovation.gerenciamentodepessoas.api.controller;
 
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.*;
-import one.digitalinnovation.gerenciamentodepessoas.domain.repository.*;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Funcionario;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.SupervisorLogin;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.FuncionarioRepository;
+import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.SupervisorRepository;
 import one.digitalinnovation.gerenciamentodepessoas.domain.service.SupervisorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
