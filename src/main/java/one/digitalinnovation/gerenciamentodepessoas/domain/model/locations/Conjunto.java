@@ -1,11 +1,8 @@
 package one.digitalinnovation.gerenciamentodepessoas.domain.model.locations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Gerente;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -15,9 +12,9 @@ public class Conjunto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "O endereço é obrigatório")
-    @Size(max = 255)
-    private String endereco;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
 
     @OneToMany(mappedBy = "conjunto", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("conjunto")
@@ -31,11 +28,11 @@ public class Conjunto {
         this.id = id;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 

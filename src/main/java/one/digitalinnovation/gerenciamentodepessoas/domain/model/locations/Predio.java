@@ -16,6 +16,8 @@ public class Predio {
     @JsonIgnoreProperties("predio")
     Conjunto conjunto;
 
+    //adicionar categoria
+
     @OneToMany(mappedBy = "predio",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("predio")
     private List<Produto> produto;
