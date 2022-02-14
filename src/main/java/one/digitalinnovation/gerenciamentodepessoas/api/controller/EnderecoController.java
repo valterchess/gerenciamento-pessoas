@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/enderecos")
@@ -47,18 +46,13 @@ public class EnderecoController {
 
     @PutMapping("/atualizar")
     public ResponseEntity<Endereco> putEndereco(@RequestBody Endereco endereco){
-        try {
-            Endereco endereco1 = enderecoRepository.findById(endereco.getId()).get();
-
-            if (endereco1 != null && endereco.getId() == endereco1.getId()){
-                return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.save(endereco));
-            }
+        var present = enderecoRepository.findById(endereco.getId()).isPresent();
+        if (present){
+            return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.save(endereco));
         }
-        catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.notFound().build();
+        else return ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delEndereco(@PathVariable long id){
         return enderecoRepository.findById(id)

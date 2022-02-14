@@ -112,7 +112,8 @@ public class GerenteController {
                 .map(resposta -> {
                     gerenteRepository.deleteById(id);
                     return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/del/supervisor/{id}")
@@ -121,7 +122,8 @@ public class GerenteController {
                 .map(resposta -> {
                     supervisorRepository.deleteById(id);
                     return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/del/funcionario/{id}")
@@ -130,6 +132,7 @@ public class GerenteController {
                 .map(resposta -> {
                     funcionarioRepository.deleteById(id);
                     return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

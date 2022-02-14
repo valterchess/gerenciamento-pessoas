@@ -31,11 +31,10 @@ public class ConjuntoController {
     @PutMapping
     public ResponseEntity<Conjunto> putConjunto(@RequestBody Conjunto conjunto){
         var present = conjuntoRepository.findById(conjunto.getId()).isPresent();
-        var conjunto1 = conjuntoRepository.findById(conjunto.getId()).get();
-        if (present && conjunto.getId() == conjunto1.getId()){
+        if (present){
             return ResponseEntity.status(HttpStatus.OK).body(conjuntoRepository.save(conjunto));
         }
-        return ResponseEntity.notFound().build();
+        else return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -45,6 +44,6 @@ public class ConjuntoController {
             conjuntoRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.notFound().build();
+        else return ResponseEntity.notFound().build();
     }
 }
