@@ -20,7 +20,10 @@ public class Funcionario {
 
 	private String credencial;
 
-	private Predio setor;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Predio predio;
 
 	@OneToMany(mappedBy = "funcionario",cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("funcionario")
@@ -58,12 +61,12 @@ public class Funcionario {
 		this.credencial = credencial;
 	}
 
-	public Predio getSetor() {
-		return setor;
+	public Predio getPredio() {
+		return predio;
 	}
 
-	public void setSetor(Predio setor) {
-		this.setor = setor;
+	public void setPredio(Predio predio) {
+		this.predio = predio;
 	}
 
 	public List<Entrada> getEntrada() {

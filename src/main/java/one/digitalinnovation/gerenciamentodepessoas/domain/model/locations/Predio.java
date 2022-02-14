@@ -1,6 +1,7 @@
 package one.digitalinnovation.gerenciamentodepessoas.domain.model.locations;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Funcionario;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,7 +21,11 @@ public class Predio {
 
     @OneToMany(mappedBy = "predio",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("predio")
-    private List<Produto> produto;
+    private List<Produto> produtos;
+
+    @OneToMany(mappedBy = "predio",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("predio")
+    private List<Funcionario> funcionarios;
 
     public long getId() {
         return id;
@@ -38,11 +43,11 @@ public class Predio {
         this.conjunto = conjunto;
     }
 
-    public List<Produto> getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setProduto(List<Produto> produto) {
-        this.produto = produto;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

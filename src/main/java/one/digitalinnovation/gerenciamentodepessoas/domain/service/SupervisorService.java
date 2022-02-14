@@ -88,7 +88,7 @@ public class SupervisorService {
     private String geraCredencial(Funcionario funcionario){
         String random = String.valueOf((int)(Math.random() * 99));
         return "S-"
-                + funcionario.getSetor() + ":"
+                + funcionario.getPredio() + ":"
                 + funcionario.getNome().toLowerCase()
                 + "-"
                 + random;
@@ -96,6 +96,6 @@ public class SupervisorService {
     private void setor(Funcionario funcionario) {
         Optional<Supervisor> gerenciador = supervisorRepository.findById(funcionario.getSupervisor().getId());
         Predio setor = gerenciador.get().getPredio();
-        funcionario.setSetor(setor);
+        funcionario.setPredio(setor);
     }
 }
