@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/gerente")
+@RequestMapping("/gerentes")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GerenteController {
 
@@ -91,7 +91,7 @@ public class GerenteController {
                 .map(resposta -> ResponseEntity.ok().body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
+    //Existe um erro aqui e na Service
     @PutMapping("/put/supervisor")
     public ResponseEntity<Supervisor> putSupervisor(@Valid @RequestBody Supervisor supervisor){
         return gerenteService.atualizarSupervisor(supervisor)

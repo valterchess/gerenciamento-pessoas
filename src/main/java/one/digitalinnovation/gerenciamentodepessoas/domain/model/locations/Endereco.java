@@ -16,6 +16,7 @@ public class Endereco{
     @Size(min = 8, max = 8, message = "O cep deve conter apenas os 8 números")
     private String cep;
     private String logradouro;
+    private String numero;
     private String bairro;
     private String localidade;
     private String uf;
@@ -75,5 +76,13 @@ public class Endereco{
 
     public void setDdd(String ddd) {
         this.ddd = ddd;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 }

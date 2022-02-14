@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Predio;
 
 @Entity
 @Table(name = "tb_funcionario")
@@ -19,7 +20,7 @@ public class Funcionario {
 
 	private String credencial;
 
-	private int setor;
+	private Predio setor;
 
 	@OneToMany(mappedBy = "funcionario",cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("funcionario")
@@ -57,11 +58,11 @@ public class Funcionario {
 		this.credencial = credencial;
 	}
 
-	public int getSetor() {
+	public Predio getSetor() {
 		return setor;
 	}
 
-	public void setSetor(int setor) {
+	public void setSetor(Predio setor) {
 		this.setor = setor;
 	}
 

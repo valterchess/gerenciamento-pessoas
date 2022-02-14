@@ -78,7 +78,7 @@ public class GerenteService {
         byte[] tokenBase64 = Base64.encodeBase64(tokenBase.getBytes(StandardCharsets.US_ASCII));
         return "Basic " + new String(tokenBase64);
     }
-
+    // Existe um erro aqui
     private Optional<Supervisor> compararSupervisor(Supervisor supervisor){
         var supervisorOp = supervisorRepository.findByEmail(supervisor.getEmail());
         var isPresent = supervisorOp.isPresent();

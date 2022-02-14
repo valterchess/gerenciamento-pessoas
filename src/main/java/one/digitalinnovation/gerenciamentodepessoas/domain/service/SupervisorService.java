@@ -3,6 +3,7 @@ package one.digitalinnovation.gerenciamentodepessoas.domain.service;
 import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Funcionario;
 import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.Supervisor;
 import one.digitalinnovation.gerenciamentodepessoas.domain.model.contributors.SupervisorLogin;
+import one.digitalinnovation.gerenciamentodepessoas.domain.model.locations.Predio;
 import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.FuncionarioRepository;
 import one.digitalinnovation.gerenciamentodepessoas.domain.repository.contributors.SupervisorRepository;
 import org.apache.commons.codec.binary.Base64;
@@ -94,7 +95,7 @@ public class SupervisorService {
     }
     private void setor(Funcionario funcionario) {
         Optional<Supervisor> gerenciador = supervisorRepository.findById(funcionario.getSupervisor().getId());
-        int setor = gerenciador.get().getSetor();
+        Predio setor = gerenciador.get().getPredio();
         funcionario.setSetor(setor);
     }
 }
