@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/enderecos")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
@@ -45,8 +47,15 @@ public class EnderecoController {
 
     @PutMapping("/atualizar")
     public ResponseEntity<Endereco> putEndereco(@RequestBody Endereco endereco){
-        if (enderecoRepository.findById(endereco.getId()).isPresent()){
-            return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.save(endereco));
+        try {
+            Endereco endereco1 = enderecoRepository.findById(endereco.getId()).get();
+
+            if (endereco1 != null && endereco.getId() == endereco1.getId()){
+                return ResponseEntity.status(HttpStatus.OK).body(enderecoRepository.save(endereco));
+            }
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
         }
         return ResponseEntity.notFound().build();
     }
