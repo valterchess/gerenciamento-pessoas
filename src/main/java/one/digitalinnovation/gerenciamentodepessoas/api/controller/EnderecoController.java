@@ -37,7 +37,7 @@ public class EnderecoController {
     }
     //melhorar esse método
     @PostMapping("/add/{cep}/{num}")
-    public ResponseEntity<Endereco> postEndereco(@PathVariable String cep, String num){
+    public ResponseEntity<Endereco> postEndereco(@PathVariable String cep, @PathVariable String num){
         var endereco = enderecoService.getEndereco(cep);
         endereco.setNumero(num);
         return ResponseEntity.status(HttpStatus.CREATED)
