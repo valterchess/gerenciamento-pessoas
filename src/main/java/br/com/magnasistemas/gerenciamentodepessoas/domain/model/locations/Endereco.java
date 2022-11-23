@@ -4,8 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Endereco{
@@ -13,7 +14,6 @@ public class Endereco{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotBlank(message = "O Cep é obrigatório.")
-    @Size(min = 8, max = 8, message = "O cep deve conter apenas os 8 números")
     private String cep;
     private String logradouro;
     private String numero;

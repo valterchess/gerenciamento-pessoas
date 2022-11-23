@@ -9,11 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/enderecos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EnderecoController {
+	private Logger logger = Logger.getLogger("arquivo");
+	
     @Autowired
     private EnderecoService enderecoService;
     @Autowired
@@ -37,7 +40,8 @@ public class EnderecoController {
     }
     //melhorar esse método
     @PostMapping("/add/{cep}/{num}")
-    public ResponseEntity<Endereco> postEndereco(@PathVariable String cep, @PathVariable String num){
+    public ResponseEntity<Endereco> postEndereco(@RequestParam("cep") String cep, @RequestParam("numero") String num){
+    	logger.info(cep);
         var endereco = enderecoService.getEndereco(cep);
         endereco.setNumero(num);
         return ResponseEntity.status(HttpStatus.CREATED)
