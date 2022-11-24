@@ -18,10 +18,11 @@ public class DioApplication {
 private static final String REDIRECT = "redirect:/swagger-ui/index.html";
 	@GetMapping
 	public ModelAndView swaggerUi(){return new ModelAndView(REDIRECT);}
+	private static final String URL_VIA_CEP = "https://viacep.com.br";
 
 	@Bean
 	public WebClient webClient(WebClient.Builder builder){
-		return builder.baseUrl("https://viacep.com.br")
+		return builder.baseUrl(URL_VIA_CEP)
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.build();
 	}
