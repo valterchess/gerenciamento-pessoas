@@ -4,11 +4,13 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Funcionario;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Saida;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.SaidaRepository;
 
+@Service
 public class SaidaService {
 	@Autowired
 	private SaidaRepository saidaRepository;
