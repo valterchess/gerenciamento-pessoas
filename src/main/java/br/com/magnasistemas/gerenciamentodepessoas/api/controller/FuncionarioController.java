@@ -2,43 +2,37 @@ package br.com.magnasistemas.gerenciamentodepessoas.api.controller;
 
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Entrada;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Saida;
-import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.EntradaRepository;
-import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.FuncionarioRepository;
-import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.SaidaRepository;
+import br.com.magnasistemas.gerenciamentodepessoas.domain.service.FuncionarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/funcionarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FuncionarioController {
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-    @Autowired
-    private EntradaRepository entradaRepository;
+	
+	@Autowired
+	private FuncionarioService funcionarioService;
 
-    @Autowired
-    private SaidaRepository saidaRepository;
+	@PostMapping("/entrada/{id}")
+	public ResponseEntity<Entrada> entrada(@PathVariable long id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.novaEntradaFuncionario(id));
+		} catch (NullPointerException ex) {
+			return ResponseEntity.status(400).build();
+		}
+	}
 
-    @PostMapping("/entrada/{id}")
-    public ResponseEntity<?> entrada(@PathVariable long id){
-            return funcionarioRepository.findById(id).map(resposta ->{
-                Entrada entrada = new Entrada(LocalDateTime.now(Clock.systemDefaultZone()), resposta);
-                entrada.setFuncionario(resposta);
-                return ResponseEntity.status(HttpStatus.OK).body(entradaRepository.save(entrada));
-            }).orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/saida/{id}")
-    public ResponseEntity<?> saida(@PathVariable long id){
-        return funcionarioRepository.findById(id).map(resposta ->{
-            Saida saida = new Saida(LocalDateTime.now(Clock.systemDefaultZone()), resposta);
-            return ResponseEntity.status(HttpStatus.OK).body(saidaRepository.save(saida));
-        }).orElse(ResponseEntity.notFound().build());
-    }
+	@PostMapping("/saida/{id}")
+	public ResponseEntity<Saida> saida(@PathVariable long id) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.novaSaidaFuncionario(id));
+		} catch (NullPointerException ex) {
+			return ResponseEntity.status(400).build();
+		}
+	}
 }
