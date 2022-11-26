@@ -47,4 +47,5 @@ public class Entrada {
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
+	
 }

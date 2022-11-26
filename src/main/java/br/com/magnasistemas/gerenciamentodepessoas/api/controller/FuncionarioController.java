@@ -1,6 +1,6 @@
 package br.com.magnasistemas.gerenciamentodepessoas.api.controller;
 
-import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Entrada;
+import br.com.magnasistemas.gerenciamentodepessoas.domain.dto.contributors.EntradaVO;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Saida;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.service.FuncionarioService;
 
@@ -19,7 +19,7 @@ public class FuncionarioController {
 	private FuncionarioService funcionarioService;
 
 	@PostMapping("/entrada/{id}")
-	public ResponseEntity<Entrada> entrada(@PathVariable long id) {
+	public ResponseEntity<EntradaVO> entrada(@PathVariable long id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.novaEntradaFuncionario(id));
 		} catch (NullPointerException ex) {
