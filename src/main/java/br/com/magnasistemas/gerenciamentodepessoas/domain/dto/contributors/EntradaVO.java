@@ -1,7 +1,5 @@
 package br.com.magnasistemas.gerenciamentodepessoas.domain.dto.contributors;
 
-//import java.time.LocalDateTime;
-
 public class EntradaVO {
 
 	private long id;

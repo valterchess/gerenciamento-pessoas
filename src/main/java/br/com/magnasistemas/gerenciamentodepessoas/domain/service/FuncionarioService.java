@@ -15,17 +15,19 @@ public class FuncionarioService {
 
 	@Autowired
 	private EntradaService entradaService;
-	
+
 	@Autowired
 	private SaidaService saidaService;
 
 	public EntradaVO novaEntradaFuncionario(Long id) {
-		return funcionarioRepository.findById(id).map(entradaService::novaEntrada)
-				.orElseThrow(() -> new NullPointerException());
+		return funcionarioRepository.findById(id)
+				.map(entradaService::novaEntrada)
+				.orElseThrow(NullPointerException::new);
 	}
-	
+
 	public Saida novaSaidaFuncionario(Long id) {
-		return funcionarioRepository.findById(id).map(saidaService::novaSaida)
-				.orElseThrow(() -> new NullPointerException());
+		return funcionarioRepository.findById(id)
+				.map(saidaService::novaSaida)
+				.orElseThrow(NullPointerException::new);
 	}
 }

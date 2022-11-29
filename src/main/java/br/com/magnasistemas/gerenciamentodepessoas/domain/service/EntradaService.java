@@ -10,39 +10,21 @@ import br.com.magnasistemas.gerenciamentodepessoas.domain.dto.contributors.Entra
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Entrada;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Funcionario;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.EntradaRepository;
+import br.com.magnasistemas.gerenciamentodepessoas.shared.utils.ConversorDeEntrada;
 
 @Service
 public class EntradaService {
 	@Autowired
 	private EntradaRepository entradaRepository;
+	
 
 	public EntradaVO novaEntrada(Funcionario funcionario) {
 		Entrada entrada = new Entrada();
 		entrada.setEntrada(LocalDateTime.now(Clock.systemDefaultZone()));
 		entrada.setFuncionario(funcionario);
 		Entrada entradaSalva = entradaRepository.save(entrada);
-		EntradaVO entradaVO = converteEntradaEntityEmEntradaVO(entradaSalva);
+		EntradaVO entradaVO = ConversorDeEntrada.converteEntradaEntityEmEntradaVO(entradaSalva);
 		return entradaVO;
 	}
 
-	private EntradaVO converteEntradaEntityEmEntradaVO(Entrada entrada) {
-		EntradaVO entradaVO = new EntradaVO();
-		entradaVO.setId(entrada.getId());
-		String horarioDeEntrada = formataDataDeEntrada(entrada.getEntrada());
-		entradaVO.setEntrada(horarioDeEntrada);
-		entradaVO.setNomeFuncionario(entrada.getFuncionario().getNome());
-		entradaVO.setCredencialFuncionario(entrada.getFuncionario().getCredencial());
-		return entradaVO;
-	}
-
-	private String formataDataDeEntrada(LocalDateTime entrada) {
-		int ano = entrada.getYear();
-		int mes = Integer.parseInt(entrada.getMonth().toString());
-		int dia = entrada.getDayOfMonth();
-		int horas = entrada.getHour();
-		int minutos = entrada.getMinute();
-		StringBuilder data = new StringBuilder();
-		data.append(ano + "/" + mes + "/" + dia + "-" + horas + ":" + minutos);
-		return data.toString();
-	}
 }

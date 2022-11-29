@@ -1,5 +1,6 @@
 package br.com.magnasistemas.gerenciamentodepessoas.api.controller;
 
+import br.com.magnasistemas.gerenciamentodepessoas.domain.dto.contributors.FuncionarioVO;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.Funcionario;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.model.contributors.SupervisorLogin;
 import br.com.magnasistemas.gerenciamentodepessoas.domain.repository.contributors.FuncionarioRepository;
@@ -21,69 +22,70 @@ import java.util.logging.Logger;
 @RequestMapping("/supervisor")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SupervisorController {
-    @Autowired
-    private SupervisorService supervisorService;
-    @Autowired
-    private SupervisorRepository supervisorRepository;
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
-    @Autowired
-    private ArquivoService arquivoService;
-    
-    private Logger logger = Logger.getLogger("arquivo");
+	@Autowired
+	private SupervisorService supervisorService;
+	@Autowired
+	private SupervisorRepository supervisorRepository;
+	@Autowired
+	private FuncionarioRepository funcionarioRepository;
+	@Autowired
+	private ArquivoService arquivoService;
 
-    @GetMapping("/equipe/{id}")
-    public ResponseEntity<List<Funcionario>> getEquipe(@PathVariable long id){
-        return ResponseEntity.ok(supervisorRepository.findById(id).get().getFuncionario());
-    }
+	private Logger logger = Logger.getLogger("arquivo");
 
-    @GetMapping("/funcionarios")
-    public ResponseEntity<List<Funcionario>> getFuncionarios(){
-        return ResponseEntity.ok(funcionarioRepository.findAll());
-    }
+	@GetMapping("/equipe/{id}")
+	public ResponseEntity<List<Funcionario>> getEquipe(@PathVariable long id) {
+		return ResponseEntity.ok(supervisorRepository.findById(id).get().getFuncionario());
+	}
 
-    @PostMapping("/post/funcionario")
-    public ResponseEntity<Funcionario> postFuncionario(@Valid @RequestBody Funcionario funcionario){
-        return supervisorService.cadastroFuncionario(funcionario)
-                .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
-                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-    }
-    
-    @PostMapping(value = "/arquivo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> postFotoFuncionario(@RequestPart("file") MultipartFile arquivo) {
-    	logger.info("Iniciando chamada do método");
-    	if(arquivo != null && !arquivo.getOriginalFilename().isEmpty()) {
-    		logger.info("Chamando método de upload do arquivo");
-    		arquivoService.write(arquivo);
-    		logger.info("Execução bem sucedida");
-    		return ResponseEntity.status(201).body("Arquivo Salvo"); 
-    	}
-    	else {
-    		logger.info("Falha na execução");
-    		return ResponseEntity.status(400).build();
-    	}
-    }
+	@PostMapping("/logar")
+	public ResponseEntity<SupervisorLogin> login(@RequestBody SupervisorLogin supervisor) {
+		return supervisorService.autenticarSupervisor(supervisor).map(resposta -> ResponseEntity.ok().body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
 
-    @PostMapping("/logar")
-    public ResponseEntity<SupervisorLogin> login(@RequestBody SupervisorLogin supervisor){
-        return supervisorService.autenticarSupervisor(supervisor)
-                .map(resposta -> ResponseEntity.ok().body(resposta))
-                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-    }
+	@GetMapping("/funcionarios")
+	public ResponseEntity<List<Funcionario>> getFuncionarios() {
+		return ResponseEntity.ok(funcionarioRepository.findAll());
+	}
 
-    @PutMapping("/put/funcionario")
-    public ResponseEntity<Funcionario> putFuncionario(@Valid @RequestBody Funcionario funcionario){
-        return supervisorService.atualizarFuncionario(funcionario)
-                .map(resposta -> ResponseEntity.ok().body(resposta))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
+	@PostMapping("/funcionario")
+	public ResponseEntity<Funcionario> postFuncionario(@Valid @RequestBody Funcionario funcionario) {
+		return supervisorService.cadastroFuncionario(funcionario)
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+	}
 
-    @DeleteMapping("/del/funcionario/{id}")
-    public ResponseEntity<?> delFuncionario(@PathVariable long id){
-        return funcionarioRepository.findById(id)
-                .map(resposta -> {
-                    funcionarioRepository.deleteById(id);
-                    return ResponseEntity.noContent().build();
-                }).orElse(ResponseEntity.notFound().build());
-    }
+	@PutMapping("/funcionario/{codigo}")
+	public ResponseEntity<FuncionarioVO> putFuncionario(@Valid @RequestBody Funcionario funcionario,
+			@PathVariable String codigo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(supervisorService.atualizarFuncionario(funcionario, codigo));
+		} catch (NullPointerException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+
+	@DeleteMapping("/funcionario/{id}")
+	public ResponseEntity<?> delFuncionario(@PathVariable long id) {
+		return funcionarioRepository.findById(id).map(resposta -> {
+			funcionarioRepository.deleteById(id);
+			return ResponseEntity.noContent().build();
+		}).orElse(ResponseEntity.notFound().build());
+	}
+
+	@PostMapping(value = "/arquivo", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<String> postFotoFuncionario(@RequestPart("file") MultipartFile arquivo) {
+		logger.info("Iniciando chamada do método");
+		if (arquivo != null && !arquivo.getOriginalFilename().isEmpty()) {
+			logger.info("Chamando método de upload do arquivo");
+			arquivoService.write(arquivo);
+			logger.info("Execução bem sucedida");
+			return ResponseEntity.status(201).body("Arquivo Salvo");
+		} else {
+			logger.info("Falha na execução");
+			return ResponseEntity.status(400).build();
+		}
+	}
 }
