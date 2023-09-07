@@ -10,11 +10,11 @@
 	</parent>
 
 	<!-- tag::apiInfo[]-->
-	<groupId>one.digitalinnovation</groupId>
-	<artifactId>DIO</artifactId>
+	<groupId>br.com.nesherconsultoria</groupId>
+	<artifactId>nesher</artifactId>
 	<version>1.8.1</version>
-	<name>DIO</name>
-	<description>Dio</description>
+	<name>gerenciamento pessoas</name>
+	<description>Gerenciamento de pessoas</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -56,14 +56,6 @@
 		</dependency>
 		<!-- end::jpa[]-->
 
-		<!-- tag::mySql[]-->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- end::mySql[]-->
-
 		<!-- tag::postgreSql[]-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -79,8 +71,7 @@
 		</dependency>
 		<!-- end::validation[]-->
 		<!-- end::persistenseDbConfig[]-->
-
-		<!-- tag::securityConfig[]-->
+		
 		<!-- tag::springSecurity[]-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -97,7 +88,17 @@
 		<!-- end::securityConfig[]-->
 
 		<!-- tag::docConfig[]-->
+		
+		<!-- tag::lombok[]-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.28</version>
+		</dependency>
+		<!-- end::lombok[]-->
+		
 		<!-- tag::openapi[Swagger]-->
+		<!-- tag::securityConfig[]-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
