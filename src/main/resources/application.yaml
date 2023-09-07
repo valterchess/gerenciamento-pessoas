@@ -11,7 +11,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/gerenciamento_pessoas
     username: valter
-    password: 9153_Deus
+    password: ${passgres}
   jpa:
     show-sql: true
     generate-ddl: false
